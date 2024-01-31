@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatGPT Projects</title>
+</head>
+<body>
+    <h1>Welcome to the ChatGPT Web Application</h1>
+    <form method="post">
+        <input type="text" name="project_name" placeholder="Enter new project name..." required>
+        <button type="submit">Create Project</button>
+    </form>
+    <h2>Projects</h2>
+    <ul>
+        {% for project in projects %}
+            <li><a href="{{ url_for('chat', project_id=project.id) }}">{{ project.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

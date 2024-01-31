@@ -1,0 +1,11 @@
+# SQLite database
+/instance/chatgpt.db
+
+# Python cache files
+__pycache__/
+
+# Saved files (all .save files)
+*.save
+
+# Specific save file
+app.py.save

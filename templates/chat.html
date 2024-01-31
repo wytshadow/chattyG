@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="chat-container" aria-live="polite">
+    <div id="history">
+        {% for conversation in conversations %}
+            <div class="message">
+                <span class="timestamp">{{ conversation.timestamp | formatdatetime }}</span>
+                <strong>You:</strong> <span>{{ conversation.user_input | safe }}</span>
+            </div>
+            <div class="message">
+                <span class="timestamp">{{ conversation.timestamp | formatdatetime }}</span>
+                <strong>ChatGPT:</strong> <span>{{ conversation.chat_response | safe }}</span>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- Loading Spinner -->
+    <div id="loading" class="spinner-border text-primary" role="status" style="display: none;">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div id="status" class="status"></div>
+    <div class="input-group mb-3">
+        <input id="user_input" type="text" class="form-control" placeholder="Type your message here..." aria-label="Message input">
+        <div class="input-group-append">
+            <button class="btn btn-primary" id="sendButton">Send</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var project_id = {{ project.id | tojson }};
+</script>
+<script src="{{ url_for('static', filename='chat.js') }}"></script>
+{% endblock %}
